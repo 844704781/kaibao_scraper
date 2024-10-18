@@ -27,7 +27,7 @@ cd .venv/bin/
 ./activate
 ```
 
-1. 安装依赖 💻
+2. 安装依赖 💻
 
 ```shell
 pip install -r requirements.txt
