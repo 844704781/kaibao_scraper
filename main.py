@@ -57,7 +57,7 @@ class Progress:
 def matches_result_pb(req: MatchesResultRequest):
     url = f'https://www.kaibao1.com/api/obNativeApi/noLogin/matchesResultPB?ts={int(time.time())}&nonce={time.time_ns()}'
 
-    response = requests.post(url, headers=headers, json=req.__dict__)
+    response = requests.post(url, headers=headers, json=req.__dict__, timeout=10)
     if not response.ok:
         print(f"😢 数据获取失败，返回: {response.text}")
         return
@@ -75,7 +75,7 @@ def get_match_result_pb(req: MatchResultRequest, progress: Progress):
     print(f"🎉 进度: {progress.index}/{progress.sum}, 当前联赛: {progress.tn}, 开始收集比赛ID: {mid} 数据")
 
     url = f"https://www.kaibao1.com/api/obNativeApi/noLogin/getMatchResultPB?ts={int(time.time())}&nonce={time.time_ns()}"
-    response = requests.post(url, headers=headers, json=req.__dict__)
+    response = requests.post(url, headers=headers, json=req.__dict__, timeout=10)
     if not response.ok:
         print(f"⚠️ 获取比赛数据出错, 原因：{response.text}")
         return
