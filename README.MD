@@ -15,10 +15,16 @@ result.json # 比赛结果数据
 
 打开终端后，进入项目目录后
 
-1. 创建python虚拟空间
+1. 创建python虚拟空间,使用虚拟空间python
 
 ```shell
 python -m venv .venv
+# windows
+cd .venv\Scripts
+.\activate
+# Linux或者macOs
+cd .venv/bin/
+./activate
 ```
 
 1. 安装依赖 💻
