@@ -5,7 +5,7 @@ import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 
-thread_pool = ThreadPoolExecutor(max_workers=2)
+thread_pool = ThreadPoolExecutor(max_workers=1)
 result_file_path = 'result.json'
 
 headers = {
@@ -63,7 +63,7 @@ def matches_result_pb(req: MatchesResultRequest):
         return
 
     resp = response.json()
-    if resp['data'] is None:
+    if resp.get('data') is None:
         print(f"⚠️ 获取联赛数据出错, 原因：{response.text}")
         return
     return resp['data']
@@ -80,7 +80,7 @@ def get_match_result_pb(req: MatchResultRequest, progress: Progress):
         print(f"⚠️ 获取比赛数据出错, 原因：{response.text}")
         return
     resp = response.json()
-    if resp['data'] is None:
+    if resp.get('data') is None:
         print(f"⚠️ 获取比赛数据出错, 原因：{response.text}")
         return
     return resp['data']
@@ -119,14 +119,15 @@ def main():
         print(f'\t🏆 {key}')
     print("🎈" + "-" * 48 + "🎈")
     print("🚀 开始获取每场比赛数据... 🚀")
-    futures = []
+
     for index, key in enumerate(tournaments):
         matches = tournaments[key]
         for match in matches:
-            futures.append(thread_pool.submit(get_match_result, match, Progress(_index=index, _sum=len(tournaments),
-                                                                                tournament_name=match['tn'])))
-    for future in as_completed(futures):
-        future.result()
+            try:
+                get_match_result(match, progress=Progress(index+1, len(tournaments), match['tn']))
+                time.sleep(1) # 自行控制频率
+            except Exception as e:
+                print(f"获取比赛数据异常:{e}")
     write_json(result_file_path, tournaments)
     print(f"✅ 获取每场比赛数据结束, 请查阅: {result_file_path} 📁")
 
