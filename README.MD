@@ -1,15 +1,35 @@
 # 🎉 开宝体育赛果数据获取工具 🏆
-🌐 网址: 开宝体育
+🌐 网址: https://www.kaibao1.com/
 
-## 📚 使用方法
+## 项目结构
+
+```shell
+main.py # 核心程序
+README.MD # markdown文档，如果不会打开，请打开pdf
+README.pdf # pdf文档
+requirements.txt # 项目依赖
+result.json # 比赛结果数据
+```
+
+## 📚  终端使用方法
+
+打开终端后，进入项目目录后
+
+1. 创建python虚拟空间
+
+```shell
+python -m venv .venv
+```
+
 1. 安装依赖 💻
+
 ```shell
 pip install -r requirements.txt
 
 #(可选)如果安装依赖太慢，可以使用镜像源哦~
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
-2. 执行爬取操作 🚀
+3. 执行爬取操作 🚀
 ```shell
 python main.py
 ```
